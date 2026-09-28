@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Belajar Integrasi Lanjut · Word × Excel</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#24304a;--sky:#4dabf7;--mint:#38d9a9;--sun:#ffd43b;--coral:#ff8787;--grape:#9775fa}
+*{box-sizing:border-box}
+body{margin:0;font:400 1rem/1.6 Nunito,system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#e3f4ff,#fff6df 50%,#f1e8ff) fixed;min-height:100vh}
+h1,h2,h3{font-family:'Baloo 2',sans-serif;margin:.2em 0;line-height:1.2}
+.wrap{max-width:980px;margin:auto;padding:14px}
+.card{background:#fff;border-radius:24px;padding:20px;margin:14px 0;box-shadow:0 6px 0 #cfe3f7,0 18px 30px rgba(77,120,190,.22)}
+.btn{font:800 1rem 'Baloo 2',sans-serif;border:0;border-radius:16px;padding:9px 20px;color:#fff;background:var(--sky);box-shadow:0 5px 0 #2f84c9;cursor:pointer;margin:4px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #2f84c9}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--grape);outline-offset:2px}
+.btn.g{background:var(--mint);box-shadow:0 5px 0 #1fa47c}.btn.y{background:var(--sun);color:#5c4700;box-shadow:0 5px 0 #d0a800}
+.btn.c{background:var(--coral);box-shadow:0 5px 0 #d45c5c}.btn.p{background:var(--grape);box-shadow:0 5px 0 #6f4ed1}
+.btn:disabled{opacity:.5}
+input,select,textarea{font:inherit;padding:9px 12px;border:2px solid #cfe3f7;border-radius:14px;width:100%;background:#fbfdff;color:var(--ink)}
+input[type=radio],input[type=checkbox]{width:auto}
+label.f{display:block;font-weight:800;margin:10px 0 2px}
+.stage{perspective:520px;height:110px}
+.cube{width:64px;height:64px;position:relative;transform-style:preserve-3d;animation:spin 14s linear infinite;margin:22px auto}
+.cube i{position:absolute;inset:0;display:grid;place-items:center;font:800 26px 'Baloo 2';color:#fff;border-radius:10px;font-style:normal}
+.cube i:nth-child(1){transform:translateZ(32px);background:#2b7cd3}.cube i:nth-child(2){transform:rotateY(180deg) translateZ(32px);background:#1fa47c}
+.cube i:nth-child(3){transform:rotateY(90deg) translateZ(32px);background:#ff922b}.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(32px);background:#9775fa}
+.cube i:nth-child(5){transform:rotateX(90deg) translateZ(32px);background:#f06595}.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(32px);background:#fab005}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){.cube{animation:none}}
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.tile{cursor:pointer;border:0;text-align:left;font:inherit;color:inherit;background:#fff;border-radius:22px;padding:18px;box-shadow:0 7px 0 var(--b,#cfe3f7),0 18px 28px rgba(77,120,190,.2);transition:transform .15s}
+.tile:hover{transform:translateY(-4px) rotateX(4deg)}.tile:active{transform:translateY(3px);box-shadow:0 2px 0 var(--b)}
+.tile b{font:800 1.2rem 'Baloo 2'}.tile span{display:block;font-size:.9rem}.tile em{font-style:normal;font-size:1.8rem}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-block;background:#e7f5ff;border-radius:999px;padding:2px 12px;font-weight:800;font-size:.85rem}
+.q{border:2px solid #e3eefb;border-radius:18px;padding:12px 14px;margin:12px 0}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:6px 10px;border-radius:12px;cursor:pointer;margin:3px 0}
+.opt:hover{background:#eef7ff}.opt.ok{background:#d3f9d8}.opt.bad{background:#ffe3e3}
+.pair{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;align-items:center;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}th,td{border:1px solid #cfe3f7;padding:6px 9px;text-align:left}th{background:#e7f5ff}
+.wide{overflow-x:auto}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.xl{background:#e6fcf5;border:2px solid #38d9a9;border-radius:16px;padding:12px}.wd{background:#e7f5ff;border:2px solid #4dabf7;border-radius:16px;padding:12px}
+.xl td input{padding:3px 8px}
+.bars{display:flex;align-items:flex-end;gap:12px;height:190px;border-bottom:3px solid #4dabf7;padding:0 8px}
+.bars div{flex:1;background:linear-gradient(#74c0fc,#339af0);border-radius:10px 10px 0 0;position:relative;box-shadow:4px 0 0 #1c7ed6;min-height:4px}
+.bars span{position:absolute;top:-22px;width:100%;text-align:center;font-weight:800}.bars em{position:absolute;bottom:-26px;width:100%;text-align:center;font-style:normal}
+.letter{background:#fffdf5;border:3px double #f0c419;border-radius:14px;padding:18px;text-align:center;min-height:130px}
+mark{background:#ffec99;border-radius:6px;padding:0 4px}
+details{background:#f8fbff;border-radius:16px;padding:10px 14px;margin:10px 0;border:2px solid #e3eefb}summary{cursor:pointer;font:800 1.1rem 'Baloo 2'}
+.score{font:800 3rem 'Baloo 2';color:var(--grape)}
+.bar{height:16px;background:#e7f5ff;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sky),var(--mint))}
+.note{background:#fff9db;border-left:6px solid var(--sun);padding:8px 12px;border-radius:10px}
+</style></head><body><div class="wrap" id="app"></div>
+<script>
+const CONFIG={SCRIPT_URL:""}; // tempel URL Web App Google Apps Script di sini
+const $=id=>document.getElementById(id), R=a=>[...a].sort(()=>Math.random()-.5);
+const app=$('app'), main=h=>{app.innerHTML=h;scrollTo(0,0)};
+let S=JSON.parse(localStorage.getItem('ip')||'null')||{user:null,done:{}};
+const save=()=>localStorage.setItem('ip',JSON.stringify(S));
+
+/* ===== BANK SOAL: [soal, "opsi benar dulu|salah|salah...", jumlah_opsi_benar] (opsi diacak saat tampil) ===== */
+const PRE_MC=[
+["Fitur Word untuk membuat surat/sertifikat massal dari data Excel disebut…","Mail Merge|Track Changes|Word Count|SmartArt|Watermark",1],
+["Cara menempel tabel Excel ke Word agar ikut berubah saat data Excel diubah adalah…","Paste Special → Paste Link|Keep Text Only|Format Painter|Print Screen|Ctrl+X saja",1],
+["Ekstensi berkas Excel standar adalah…",".xlsx|.docx|.pptx|.pdf|.txt",1],
+["Diagram yang tepat untuk membandingkan nilai antar kategori adalah…","Diagram kolom|Diagram Venn|Flowchart|Organogram|Mind map",1],
+["Berkas berisi data penerima pada mail merge disebut…","Data source|Main document|Footer|Header|Watermark",1]];
+const PRE_CX=[
+["Contoh data source yang bisa dipakai mail merge:","Lembar kerja Excel|Tabel Access|Berkas CSV|Foto liburan (.jpg)|Lagu (.mp3)",3],
+["Cara menampilkan grafik Excel di Word:","Copy lalu Paste di Word|Insert → Object → Microsoft Excel Chart|Insert → Chart di Word|Menghapus grafik|Mengganti font",3],
+["Manfaat integrasi Word dan Excel:","Data konsisten|Hemat waktu membuat surat massal|Laporan mudah diperbarui|Mengurangi salah ketik|Komputer otomatis jadi lebih cepat",4],
+["Dokumen yang dapat dihasilkan mail merge:","Surat undangan|Sertifikat|Label nama|Amplop|Video pembelajaran",4],
+["Yang perlu disiapkan sebelum mail merge:","Data Excel dengan judul kolom|Dokumen utama di Word|Data tersusun rapi tanpa baris kosong|Proyektor menyala|Nama berkas hanya angka",3]];
+const QE=[
+["Aplikasi untuk membuat lembar kerja angka dan grafik adalah…","Microsoft Excel|Microsoft Word|Paint|Notepad|Media Player",1],
+["Pintasan keyboard untuk menyalin (copy) adalah…","Ctrl+C|Ctrl+V|Ctrl+X|Ctrl+Z|Ctrl+P",1],
+["Tab di Word yang memuat menu mail merge adalah…","Mailings|Insert|Layout|View|Review",1],
+["Satu baris data lengkap (misal data satu murid) dalam data source disebut…","Record|Field|Sheet|Macro|Slide",1],
+["Judul kolom seperti ‘Nama’ pada data source disebut…","Field|Record|Workbook|Font|Slide",1]];
+const QM=[
+["Langkah pertama mail merge di Word adalah…","Start Mail Merge → pilih jenis dokumen|Finish & Merge|Preview Results|Print|Save as PDF",1],
+["Opsi tempel yang membuat data di Word ikut berubah dari Excel adalah…","Paste Special → Paste Link|Paste as Picture|Keep Text Only|Merge Formatting|Paste Values",1],
+["Tombol untuk menyisipkan kolom data ke dalam dokumen mail merge adalah…","Insert Merge Field|Select Recipients|Edit Recipient List|Finish & Merge|Rules",1],
+["Fungsi Select Recipients → Use an Existing List adalah…","Memilih berkas Excel sebagai sumber data|Membuat surat baru|Mencetak dokumen|Mengubah font|Menambah slide",1],
+["Perbedaan Embed dan Link: Embed…","menyimpan salinan data di dalam Word|selalu terhubung ke Excel asli|tidak bisa diedit|hanya untuk gambar|otomatis menghapus Excel",1]];
+const QH=[
+["Nomor telepon di data Excel kehilangan angka 0 di depan saat merge. Solusi terbaik…","Ubah format kolom menjadi Text di Excel|Hapus kolom|Ganti printer|Perbesar font|Simpan sebagai .txt",1],
+["Tanggal pada hasil merge tampil 09/28/2026 (format Amerika). Solusi…","Tambahkan switch &#92;@ 'dd MMMM yyyy' pada field tanggal|Ubah warna huruf|Ganti ukuran kertas|Hapus tanggal|Instal ulang Word",1],
+["Mail merge hanya menampilkan 5 dari 30 murid. Penyebab paling mungkin…","Filter pada Edit Recipient List aktif|Font terlalu besar|Kertas F4|Grafik kosong|Excel belum diinstal",1],
+["Setelah Excel dipindah folder, grafik ber-Paste Link di Word tidak berubah lagi. Penyebabnya…","Tautan ke berkas sumber terputus karena lokasi berubah|Word versi lama|Printer mati|Font hilang|Excel rusak",1],
+["Guru perlu 90 sertifikat berbeda nama & nilai dalam satu PDF. Langkah tepat…","Mail merge Letters → Finish & Merge → Edit Individual Documents → Save as PDF|Mengetik satu per satu|Copy-paste 90 kali|Screenshot lalu cetak|Menggunakan Paint",1]];
+const POST_MC=[
+["Integrasi Word dan Excel adalah…","memakai data/grafik Excel di dokumen Word agar saling terhubung|mengubah Word menjadi Excel otomatis|memasang dua aplikasi sekaligus|mencetak dua dokumen bersamaan|menghapus data lama",1],
+["Perbedaan Embed dan Link yang benar adalah…","Embed menyimpan salinan data di Word, Link terhubung ke berkas Excel asli|Embed selalu terhubung ke Excel|Link menyimpan data di dalam Word|Keduanya identik|Embed hanya untuk gambar",1],
+["Cara menyalin tabel Excel menjadi tabel Word yang bisa diedit…","Ctrl+C di Excel, Ctrl+V di Word|Print Screen lalu simpan|Mengetik ulang di Notepad|Menyimpan sebagai .exe|Mail Merge",1],
+["Grafik yang cocok untuk tren nilai tiap bulan adalah…","Diagram garis|Diagram lingkaran 20 kategori|Flowchart|Organogram|Peta",1],
+["Diagram lingkaran (pie) paling cocok untuk menunjukkan…","persentase bagian terhadap keseluruhan|tren waktu|alur proses|struktur organisasi|hubungan dua variabel",1],
+["Urutan mail merge yang benar adalah…","Pilih jenis dokumen → pilih data source → sisipkan merge field → preview → finish & merge|Finish → preview → pilih data → jenis dokumen|Sisipkan field → cetak → pilih data|Preview → jenis dokumen → simpan|Cetak → pilih data → jenis dokumen",1],
+["Tanda seperti «Nama» pada dokumen utama disebut…","Merge field|Hyperlink|Watermark|Footnote|Header",1],
+["Fitur Preview Results berguna untuk…","melihat hasil gabungan data sebelum dicetak|menyimpan otomatis|mengubah data Excel|menghapus recipient|mengganti printer",1],
+["Manfaat mail merge untuk 30 sertifikat adalah…","satu templat menghasilkan 30 dokumen dengan data berbeda|semua sertifikat bernama sama|kertas otomatis hemat|nilai murid berubah sendiri|Excel baru terbuat",1],
+["Kolom Kelas kosong pada beberapa hasil merge. Penyebab paling mungkin…","sel Kelas pada baris Excel tersebut kosong|font terlalu kecil|Word rusak|ukuran kertas salah|tidak ada penyebab",1],
+["Contoh penerapan mail merge di sekolah…","Undangan wali murid dengan nama berbeda|Mengedit foto kelas|Memutar musik|Mengompres video|Menginstal antivirus",1],
+["Contoh penerapan grafik Excel di Word…","Laporan penjualan kantin bulanan dengan grafik|Mengetik puisi|Menghapus berkas|Memutar video|Mengganti wallpaper",1],
+["Opsi yang menghasilkan dokumen baru berisi semua hasil merge adalah…","Edit Individual Documents|Print Layout|Save Template|Insert Merge Field|Rules",1],
+["Agar data Excel siap dipakai mail merge…","baris pertama berisi judul kolom, tanpa baris/kolom kosong|semua sel digabung|data ditulis sebagai gambar|semua kolom disembunyikan|data disebar di banyak sheet acak",1],
+["Grafik Excel di Word yang otomatis berubah saat data berubah dibuat dengan…","Paste Special → Paste Link|Screenshot|Paste as Picture|Mengetik ulang|Ctrl+P",1]];
+const POST_CX=[
+["Keuntungan Paste Link:","Data di Word ikut diperbarui saat Excel berubah|Cukup mengubah data di satu tempat|Risiko data tidak sinkron berkurang|Word tidak butuh berkas Excel sama sekali|Grafik otomatis jadi 3D",3],
+["Bagian dokumen utama mail merge yang dapat diubah:","Isi teks tetap|Posisi merge field|Format huruf dan tata letak|Isi sel Excel langsung tanpa membuka Excel|Jumlah sheet Excel",3],
+["Jenis dokumen pada Start Mail Merge:","Letters|Envelopes|Labels|Directory|Animation",4],
+["Yang dicek sebelum Finish & Merge:","Preview Results|Edit Recipient List|Kesesuaian merge field|Ukuran layar monitor|Warna kabel",3],
+["Alasan grafik Excel tepat dipakai di laporan Word:","Pola data mudah dilihat|Perbandingan jelas|Mendukung kesimpulan berbasis data|Menggantikan seluruh teks laporan|Membuat data otomatis benar",3]];
+const MT=[["Mail Merge","Menggabungkan data Excel ke templat Word"],["Paste Link","Data di Word ikut berubah mengikuti Excel"],["Merge Field","Penanda tempat data akan muncul di dokumen"]];
+const SA=[["Tab Word yang berisi menu Mail Merge (satu kata):","mailings"],["Satu baris data lengkap dalam data source disebut… (satu kata):","record"]];
+
+/* ===== KOMPONEN KUIS ===== */
+const qH=(q,n,k,nm)=>{const o=R(q[1].split('|').map((t,i)=>({t,c:i<q[2]})));
+ return `<div class="q u" data-t="o"><b>${n}. ${q[0]}</b>${k?' <small>(pilih semua yang benar)</small>':''}${o.map(x=>`<label class="opt"><input type="${k?'checkbox':'radio'}" name="${nm}" data-c="${+x.c}"><span>${x.t}</span></label>`).join('')}</div>`};
+const sec=(t,arr,k,p)=>`<h3>${t}</h3>`+arr.map((q,i)=>qH(q,i+1,k,p+i)).join('');
+const chk=u=>{const t=u.dataset.t;
+ if(t=='o')return [...u.querySelectorAll('input')].every(i=>+i.checked==+i.dataset.c);
+ if(t=='s')return u.querySelector('select').value==u.dataset.a;
+ return u.querySelector('input').value.trim().toLowerCase()==u.dataset.a};
+function quiz(title,stage,body,instant){
+ main(`${bar()}<div class="card"><h2>${title}</h2><div id="qz" ${instant?'data-i=1':''}>${body}</div><button class="btn g" id="fin">Kumpulkan jawaban</button></div><div id="res"></div>`);
+ const z=$('qz'); if(instant)z.onchange=e=>{const u=e.target.closest('.u');if(!u)return;
+  if(e.target.type=='radio'){u.querySelectorAll('input').forEach(i=>{i.disabled=true;const l=i.closest('label');if(+i.dataset.c)l.classList.add('ok');else if(i.checked)l.classList.add('bad')})}};
+ $('fin').onclick=async()=>{const us=[...z.querySelectorAll('.u')],ok=us.filter(chk).length,sc=Math.round(ok/us.length*100);
+  $('fin').disabled=true;S.done[stage]=sc;save();
+  const st=await send({tahap:stage,skor:sc,benar:ok,total:us.length});
+  $('res').innerHTML=`<div class="card" style="text-align:center"><div class="score">${sc}</div><p>Benar ${ok} dari ${us.length} soal. ${sc>=80?'Luar biasa! 🎉':sc>=60?'Bagus, terus berlatih! 💪':'Tidak apa-apa, ulangi materi lalu coba lagi. 🌱'}</p><p class="tag">${st}</p><br><button class="btn" onclick="home()">Kembali ke menu</button> <button class="btn y" onclick="location.reload()">Coba lagi nanti</button></div>`;$('res').scrollIntoView({behavior:'smooth'})}}
+
+/* ===== KIRIM KE GOOGLE SHEET ===== */
+async function send(p){const r={...S.user,...p,detail:p.detail||'',waktu:new Date().toISOString()};
+ const u=CONFIG.SCRIPT_URL,q=JSON.parse(localStorage.getItem('ipq')||'[]');
+ if(!u){q.push(r);localStorage.setItem('ipq',JSON.stringify(q));return 'Disimpan di perangkat (URL Google Sheet belum diisi)'}
+ try{for(const x of [...q,r])await fetch(u,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(x)});localStorage.setItem('ipq','[]');return 'Terkirim ke guru ✓'}
+ catch(e){q.push(r);localStorage.setItem('ipq',JSON.stringify(q));return 'Belum ada internet, akan dikirim nanti'}}
+
+/* ===== LOGIN ===== */
+function login(){
+ main(`<div class="card" style="max-width:520px;margin:24px auto"><h1 style="text-align:center">Belajar Integrasi Lanjut</h1><p style="text-align:center">Belajar Integrasi <b>Word × Excel</b> & Mail Merge · Informatika Kelas X</p>
+ <label class="f" for="nm">Nama lengkap</label><input id="nm" autocomplete="name">
+ <label class="f" for="ns">NIS</label><input id="ns" inputmode="numeric">
+ <label class="f" for="tg">Tanggal</label><input id="tg" type="date" value="${new Date().toISOString().slice(0,10)}">
+ <label class="f" for="kl">Kelas</label><select id="kl"><option value="">-- pilih kelas --</option><option>X3</option><option>X4</option></select>
+ <p id="er" style="color:#e03131;font-weight:800"></p>
+ <button class="btn g" id="go" style="width:100%">Masuk & mulai belajar</button>
+ <p style="text-align:center"><a href="#" id="gr">Masuk sebagai guru</a></p></div>`);
+ $('go').onclick=()=>{const nama=$('nm').value.trim(),nis=$('ns').value.trim(),tanggal=$('tg').value,kelas=$('kl').value;
+  if(nama.length<3||!/^\d{4,12}$/.test(nis)||!tanggal||!kelas){$('er').textContent='Lengkapi nama, NIS (angka 4–12 digit), tanggal, dan kelas.';return}
+  S.user={nama,nis,tanggal,kelas};S.done={};save();home()};
+ $('gr').onclick=e=>{e.preventDefault();guru()}}
+const bar=()=>`<div class="card top" style="padding:12px 18px"><b>👋 ${S.user.nama} · ${S.user.kelas}</b><span><button class="btn" onclick="home()">🏠 Menu</button><button class="btn c" onclick="out()">Keluar</button></span></div>`;
+function out(){S={user:null,done:{}};save();login()}
+
+/* ===== MENU ===== */
+function home(){const T=[['pre','📝','Pre-test','Cek pengetahuan awalmu','#74c0fc'],['materi','📚','Materi','Tiga tujuan pembelajaran','#63e6be'],['sim','🧪','Simulasi','Coba sendiri & contoh sehari-hari','#ffd43b'],['kuis','🎯','Kuis Bertingkat','Mudah · Sedang · Rumit','#ffa8a8'],['refl','🪞','Refleksi','Kenali cara belajarmu','#b197fc'],['post','🏆','Post-test','Buktikan kemajuanmu','#ffc078']];
+ main(`${bar()}<div class="card"><h2>Tujuan belajar hari ini</h2><ol><li>Menggunakan berbagai fitur integrasi Word dan Excel.</li><li>Menggunakan data dan grafik lembar kerja Excel pada halaman dokumen Word.</li><li>Menggunakan mail merge untuk menghubungkan data Excel dengan dokumen Word.</li></ol><p class="note">Urutan saran: Pre-test → Materi → Simulasi → Kuis → Refleksi → Post-test.</p></div>
+ <div class="tiles">${T.map(t=>`<button class="tile" style="--b:${t[4]}" onclick="go('${t[0]}')"><em>${t[1]}</em><br><b>${t[2]}</b><span>${t[3]}</span>${(t[0]=='pre'&&S.done['Pre-test']!=null)||(t[0]=='post'&&S.done['Post-test']!=null)?'<span class="tag">✓ '+S.done[t[2]]+'</span>':''}</button>`).join('')}</div>`)}
+const go=k=>({pre,materi,sim,kuis,refl,post})[k]();
+
+const pre=()=>quiz('📝 Pre-test','Pre-test',sec('Bagian A · Pilihan ganda (5 opsi)',PRE_MC,0,'a')+sec('Bagian B · Pilihan ganda kompleks',PRE_CX,1,'b'));
+const kuis=()=>main(`${bar()}<div class="card"><h2>🎯 Pilih level kuis</h2><p>Setiap level 5 soal, 5 opsi jawaban. Jawaban langsung diberi warna hijau/merah.</p><button class="btn g" onclick="kz('Mudah')">🌱 Mudah</button><button class="btn y" onclick="kz('Sedang')">🔥 Sedang</button><button class="btn c" onclick="kz('Rumit')">🚀 Rumit</button></div>`);
+const kz=l=>quiz('🎯 Kuis '+l,'Kuis '+l,sec('',{Mudah:QE,Sedang:QM,Rumit:QH}[l],0,'k'),1);
+function post(){const d=R(MT.map(x=>x[1]));
+ const m=MT.map(x=>`<div class="u pair" data-t="s" data-a="${x[1]}"><b>${x[0]}</b><select><option value="">-- pilih --</option>${d.map(y=>`<option>${y}</option>`).join('')}</select></div>`).join('');
+ const s=SA.map(x=>`<div class="u q" data-t="i" data-a="${x[1]}"><b>${x[0]}</b><input autocomplete="off"></div>`).join('');
+ quiz('🏆 Post-test','Post-test',sec('Bagian A · Pilihan ganda (15 soal)',POST_MC,0,'pa')+sec('Bagian B · Pilihan ganda kompleks (5 soal)',POST_CX,1,'pb')+'<h3>Bagian C · Menjodohkan (3 soal)</h3>'+m+'<h3>Bagian D · Isian singkat (2 soal)</h3>'+s)}
+
+/* ===== MATERI ===== */
+const M={
+1:`<h3>Apa itu integrasi Word dan Excel?</h3><p>Excel unggul mengolah angka dan membuat grafik. Word unggul menyusun laporan, surat, dan sertifikat. <b>Integrasi</b> berarti keduanya saling memakai data sehingga kita tidak mengetik ulang.</p>
+<details open><summary>1. Copy–Paste biasa</summary><p>Blok sel di Excel → <mark>Ctrl+C</mark> → klik dokumen Word → <mark>Ctrl+V</mark>. Hasilnya tabel Word yang bisa diedit, tetapi tidak terhubung ke Excel.</p></details>
+<details open><summary>2. Paste Special</summary><div class="wide"><table><tr><th>Opsi</th><th>Hasil</th></tr><tr><td>Keep Source Formatting</td><td>Tabel dengan gaya Excel asli</td></tr><tr><td>Use Destination Styles</td><td>Tabel mengikuti gaya dokumen Word</td></tr><tr><td>Picture</td><td>Menjadi gambar, tidak bisa diedit</td></tr><tr><td>Keep Text Only</td><td>Teks tanpa tabel</td></tr><tr><td><b>Paste Special → Paste Link</b></td><td>Terhubung ke Excel, ikut berubah</td></tr></table></div></details>
+<details open><summary>3. Embed vs Link</summary><div class="wide"><table><tr><th></th><th>Embed (Object)</th><th>Link</th></tr><tr><td>Data disimpan</td><td>Di dalam Word</td><td>Tetap di berkas Excel</td></tr><tr><td>Saat Excel berubah</td><td>Word tidak berubah</td><td>Word dapat diperbarui</td></tr><tr><td>Berkas dipindah</td><td>Aman</td><td>Tautan bisa putus</td></tr><tr><td>Cocok untuk</td><td>Dokumen yang dikirim sendirian</td><td>Laporan berkala dengan data berubah</td></tr></table></div></details>
+<details><summary>4. Insert Object & Tabel Excel di Word</summary><p><mark>Insert → Object → Create from File</mark> memasukkan berkas Excel utuh. <mark>Insert → Table → Excel Spreadsheet</mark> membuat lembar kerja mini langsung di Word.</p></details>
+<details><summary>5. Mengelola tautan</summary><p>Klik kanan objek → <mark>Update Link</mark>, atau tekan <mark>Ctrl+A lalu F9</mark>. Tautan putus? <mark>File → Info → Edit Links to Files</mark> → <mark>Change Source</mark>.</p></details>
+<details><summary>6. Mail Merge</summary><p>Fitur terpadu untuk menghasilkan banyak dokumen dari satu templat Word dan satu tabel Excel (lihat tab 3).</p></details>`,
+2:`<h3>Data & grafik Excel di halaman Word</h3>
+<details open><summary>A. Membuat grafik di Excel</summary><ol><li>Susun data rapi: baris pertama judul kolom.</li><li>Blok data → <mark>Insert → Charts</mark> → pilih jenis.</li><li>Beri <b>judul grafik</b>, label sumbu, dan warna yang jelas.</li></ol>
+<div class="wide"><table><tr><th>Tujuan</th><th>Jenis grafik</th></tr><tr><td>Membandingkan kategori</td><td>Kolom / Bar</td></tr><tr><td>Melihat tren waktu</td><td>Garis</td></tr><tr><td>Bagian dari keseluruhan</td><td>Lingkaran (Pie)</td></tr><tr><td>Hubungan dua variabel</td><td>Sebar (Scatter)</td></tr></table></div></details>
+<details open><summary>B. Memasang grafik ke Word</summary><ol><li>Klik grafik di Excel → <mark>Ctrl+C</mark>.</li><li>Di Word, letakkan kursor → <mark>Home → Paste ▾ → Paste Special</mark>.</li><li>Pilih <b>Keep Source Formatting &amp; Link Data</b> (atau <b>Use Destination Theme &amp; Link Data</b>) agar grafik ikut berubah.</li><li>Beri keterangan: <mark>References → Insert Caption</mark>.</li></ol></details>
+<details open><summary>C. Data (tabel) dari Excel</summary><p>Salin sel → di Word pilih <b>Paste Link</b> jika angka sering berubah, atau <b>Use Destination Styles</b> jika hanya sekali pakai. Rata-rata, jumlah, dan persentase sebaiknya dihitung di Excel dengan rumus, lalu ditempel ke Word.</p></details>
+<details><summary>D. Tips laporan yang baik</summary><ul><li>Satu grafik menyampaikan satu pesan.</li><li>Sebutkan sumber dan periode data.</li><li>Tulis kesimpulan dengan kata-katamu sendiri di bawah grafik.</li><li>Hindari warna terlalu banyak dan efek 3D berlebihan yang menyulitkan membaca angka.</li></ul></details>
+<details><summary>E. Kesalahan umum</summary><ul><li>Memindah berkas Excel sehingga tautan putus.</li><li>Menempel sebagai gambar padahal butuh pembaruan otomatis.</li><li>Grafik tanpa judul dan satuan.</li></ul></details>`,
+3:`<h3>Mail Merge: satu templat, banyak dokumen</h3>
+<details open><summary>Istilah penting</summary><div class="wide"><table><tr><th>Istilah</th><th>Arti</th></tr><tr><td>Main document</td><td>Dokumen Word sebagai templat</td></tr><tr><td>Data source</td><td>Sumber data, misalnya berkas Excel</td></tr><tr><td>Field</td><td>Kolom data (Nama, Kelas, Nilai)</td></tr><tr><td>Record</td><td>Satu baris data (satu murid)</td></tr><tr><td>Merge field</td><td>Penanda «Nama» yang diganti data saat digabung</td></tr></table></div></details>
+<details open><summary>Menyiapkan data Excel</summary><ul><li>Baris 1 berisi judul kolom unik (Nama, Kelas, Nilai).</li><li>Tanpa baris/kolom kosong dan tanpa sel yang digabung.</li><li>Satu sheet, satu tabel. Simpan dan tutup berkas sebelum merge.</li></ul></details>
+<details open><summary>7 langkah mail merge</summary><ol><li>Buat templat di Word (teks tetap saja).</li><li><mark>Mailings → Start Mail Merge</mark> → Letters (atau Envelopes/Labels).</li><li><mark>Select Recipients → Use an Existing List</mark> → pilih berkas Excel & sheet-nya.</li><li>Cek data di <mark>Edit Recipient List</mark> (filter/urutkan).</li><li>Letakkan kursor → <mark>Insert Merge Field</mark> → pilih kolom.</li><li><mark>Preview Results</mark> → gunakan panah untuk memeriksa tiap record.</li><li><mark>Finish &amp; Merge → Edit Individual Documents</mark> → simpan atau cetak/PDF.</li></ol></details>
+<details><summary>Format tanggal & angka</summary><p>Jika tanggal/angka tampil aneh, tekan <mark>Alt+F9</mark> pada field lalu tambahkan switch, contoh: <code>{ MERGEFIELD Tanggal &#92;@ "dd MMMM yyyy" }</code>. Untuk angka 0 di depan (nomor telepon), ubah kolom Excel menjadi format <b>Text</b>.</p></details>
+<details><summary>Masalah umum & solusi</summary><ul><li>Data kurang → cek filter di Edit Recipient List.</li><li>Field kosong → sel Excel kosong.</li><li>Data tidak berubah → simpan Excel, pilih ulang sumber data.</li></ul></details>
+<details><summary>Penerapan nyata</summary><p>Undangan wali murid, sertifikat lomba, kartu peserta, label nama, surat tagihan iuran, dan rapor sederhana.</p></details>`};
+function materi(t=1){main(`${bar()}<div class="card"><h2>📚 Materi</h2><div class="tabs">${[1,2,3].map(i=>`<button class="btn ${i==t?'g':''}" onclick="materi(${i})">Tujuan ${i}: ${['Fitur integrasi','Data & grafik','Mail merge'][i-1]}</button>`).join('')}</div>${M[t]}<div style="text-align:right">${t<3?`<button class="btn" onclick="materi(${t+1})">Lanjut ▶</button>`:'<button class="btn y" onclick="sim()">Coba simulasi 🧪</button>'}</div></div>`)}
+
+/* ===== SIMULASI ===== */
+function sim(){const D=[['Ayu Lestari','X3',92],['Bima Pratama','X4',85],['Citra Dewi','X3',78],['Dimas Arya','X4',96]],mo=['Jan','Feb','Mar','Apr'];
+ main(`${bar()}<div class="card"><h2>🧪 Simulasi 1 · Tempel data Excel ke Word</h2><p>Pilih cara tempel → klik <b>Tempel ke Word</b> → ubah angka di Excel. Apa yang terjadi di Word?</p>
+ <div class="grid2"><div class="xl"><b>📗 Excel · Penjualan Kantin</b><table>${mo.map((m,i)=>`<tr><td>${m}</td><td><input type="number" class="sv" min="0" max="100" value="${[40,55,30,70][i]}"></td></tr>`).join('')}</table></div>
+ <div class="wd"><b>📘 Word · Laporan</b><div class="bars" id="bars"></div><p id="sfb" style="margin-top:32px">Belum ada grafik. Klik “Tempel ke Word”.</p></div></div>
+ <select id="sm" style="max-width:380px"><option value="link">Paste Link (Keep Source Formatting &amp; Link Data)</option><option value="pic">Paste as Picture</option></select><button class="btn g" id="sp">Tempel ke Word</button></div>
+ <div class="card"><h2>🧪 Simulasi 2 · Mail Merge</h2><p>Ubah data di tabel Excel, lalu lihat dokumen Word memakai data tiap record.</p>
+ <div class="grid2"><div class="xl"><b>📗 Excel · data_murid.xlsx</b><div class="wide"><table><tr><th>Nama</th><th>Kelas</th><th>Nilai</th></tr>${D.map((r,i)=>`<tr><td><input class="dn" data-i="${i}" value="${r[0]}"></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table></div></div>
+ <div class="wd"><b>📘 Word · Sertifikat</b><div class="letter" id="lt"></div><div style="text-align:center"><button class="btn" id="pv">◀</button><b id="ri"></b><button class="btn" id="nx">▶</button><br><button class="btn y" id="tg">Preview Results: nyala/mati</button></div></div></div>
+ <button class="btn g" id="fm">Finish &amp; Merge</button><p id="fmr"></p></div>
+ <div class="card"><h2>🌍 Penerapan sehari-hari</h2><div class="grid2"><div class="note">🏅 <b>Sertifikat lomba</b>: 1 templat, ratusan nama.</div><div class="note">💌 <b>Undangan wali murid</b>: nama & kelas otomatis.</div><div class="note">🥪 <b>Laporan kantin/koperasi</b>: grafik penjualan diperbarui dengan Paste Link.</div><div class="note">🏷️ <b>Label nama & kartu ujian</b>: Mail Merge → Labels.</div></div>
+ <h3>Misi praktik (di komputer)</h3><ol><li>Buat tabel 5 murid (Nama, Kelas, Nilai) di Excel.</li><li>Buat grafik kolom nilai, tempel ke Word dengan Paste Link.</li><li>Ubah satu nilai di Excel, lalu Update Link di Word.</li><li>Buat sertifikat dengan mail merge, simpan sebagai PDF.</li></ol><button class="btn p" onclick="go('kuis')">Lanjut ke kuis 🎯</button></div>`);
+ let mode=null,snap=[];const vals=()=>[...document.querySelectorAll('.sv')].map(i=>+i.value||0);
+ const draw=()=>{const v=mode=='link'?vals():snap;$('bars').innerHTML=v.map((x,i)=>`<div style="height:${Math.min(x,100)*1.7}px"><span>${x}</span><em>${mo[i]}</em></div>`).join('')};
+ $('sp').onclick=()=>{mode=$('sm').value;snap=vals();draw();$('sfb').textContent='Sekarang ubah angka di Excel dan amati grafik.'};
+ document.querySelectorAll('.sv').forEach(i=>i.oninput=()=>{if(!mode)return;draw();$('sfb').innerHTML=mode=='link'?'✅ Grafik ikut berubah: data terhubung ke Excel.':'⚠️ Grafik tetap: hasil tempel berupa gambar, tidak terhubung.'});
+ let k=0,pv=true;const lt=()=>{const r=D[k];$('ri').textContent=` Record ${k+1}/${D.length} `;
+  const f=(n,v)=>pv?`<b>${v}</b>`:`<mark>«${n}»</mark>`;
+  $('lt').innerHTML=`<h3>SERTIFIKAT</h3>Diberikan kepada<br><span style="font:800 1.4rem 'Baloo 2'">${f('Nama',r[0])}</span><br>kelas ${f('Kelas',r[1])} dengan nilai ${f('Nilai',r[2])}<br>pada materi Integrasi Word &amp; Excel.`};
+ document.querySelectorAll('.dn').forEach(i=>i.oninput=()=>{D[+i.dataset.i][0]=i.value||'(kosong)';lt()});
+ $('pv').onclick=()=>{k=(k+D.length-1)%D.length;lt()};$('nx').onclick=()=>{k=(k+1)%D.length;lt()};$('tg').onclick=()=>{pv=!pv;lt()};
+ $('fm').onclick=()=>{$('fmr').innerHTML=`✅ Edit Individual Documents → <b>${D.length} halaman</b> dibuat: ${D.map(r=>r[0]).join(', ')}.`};lt()}
+
+/* ===== REFLEKSI ===== */
+function refl(){const L=['Sebelum belajar, aku menetapkan target apa yang ingin kupahami.','Saat belajar, aku memeriksa apakah aku benar-benar paham.','Ketika bingung, aku mencari cara lain (bertanya, mengulang, mencoba).','Aku tetap fokus walau ada gangguan di sekitarku.','Aku bisa menjelaskan mail merge dengan kata-kataku sendiri.'];
+ const O=['Bagian mana yang paling membuatmu bingung, dan apa yang kamu lakukan saat itu?','Cara belajar apa yang paling cocok untukmu hari ini (melihat, mencoba, berdiskusi, membaca)? Mengapa?','Apa yang akan kamu ubah pada cara belajarmu di pertemuan berikutnya?','Di mana kamu akan memakai keterampilan ini dalam kehidupan sehari-hari?'];
+ main(`${bar()}<div class="card"><h2>🪞 Refleksi belajar</h2><p>Tidak ada jawaban salah. Jujurlah pada dirimu: ini caramu mengenal cara berpikirmu sendiri.</p>
+ <h3>Seberapa sesuai? (1 = tidak pernah, 5 = selalu)</h3>${L.map((t,i)=>`<div class="q"><b>${t}</b><br>${[1,2,3,4,5].map(n=>`<label class="opt" style="display:inline-flex"><input type="radio" name="l${i}" value="${n}">${n}</label>`).join('')}</div>`).join('')}
+ <h3>Renungkan</h3>${O.map((t,i)=>`<label class="f" for="o${i}">${t}</label><textarea id="o${i}" rows="3"></textarea>`).join('')}
+ <label class="f" for="mood">Perasaanku setelah belajar:</label><select id="mood"><option>😄 Senang & percaya diri</option><option>🙂 Cukup paham</option><option>😐 Masih ragu</option><option>😟 Perlu bantuan</option></select>
+ <p id="er" style="color:#e03131;font-weight:800"></p><button class="btn g" id="fin">Kirim refleksi</button><p id="ok"></p></div>`);
+ $('fin').onclick=async()=>{const l=L.map((_,i)=>+(document.querySelector(`input[name=l${i}]:checked`)||{}).value||0);
+  if(l.includes(0)||O.some((_,i)=>$('o'+i).value.trim().length<5)){$('er').textContent='Isi semua skala dan tulis jawaban singkat di setiap pertanyaan.';return}
+  const av=l.reduce((a,b)=>a+b)/l.length,sc=Math.round(av*20);$('fin').disabled=true;S.done['Refleksi']=sc;save();
+  const st=await send({tahap:'Refleksi',skor:sc,benar:'',total:'',detail:JSON.stringify({skala:l,jawaban:O.map((_,i)=>$('o'+i).value.trim()),mood:$('mood').value})});
+  $('ok').innerHTML=`Terima kasih sudah jujur! 🌟 <span class="tag">${st}</span>`}}
+
+/* ===== DASHBOARD GURU ===== */
+function guru(){main(`<div class="card" style="max-width:460px;margin:auto"><h2>👩‍🏫 Dashboard Guru</h2><label class="f" for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"><p id="er" style="color:#e03131;font-weight:800"></p><button class="btn g" id="ld">Buka dashboard</button><button class="btn" onclick="S.user?home():login()">Kembali</button></div>`);
+ $('ld').onclick=async()=>{if(!CONFIG.SCRIPT_URL){$('er').textContent='URL Google Apps Script belum diisi di CONFIG.';return}
+  try{const r=await (await fetch(CONFIG.SCRIPT_URL+'?action=list&pw='+encodeURIComponent($('pw').value))).json();
+   if(!r.ok){$('er').textContent='Password salah.';return}drawDash(r.rows)}catch(e){$('er').textContent='Gagal memuat data. Periksa URL dan pengaturan akses Web App.'}}}
+function drawDash(rows){const ST=['Pre-test','Kuis Mudah','Kuis Sedang','Kuis Rumit','Refleksi','Post-test'],P={};
+ rows.forEach(r=>{const k=r.NIS;P[k]=P[k]||{n:r.Nama,k:r.Kelas,s:{}};P[k].s[r.Tahap]=+r.Skor});
+ const draw=kl=>{const L=Object.entries(P).filter(([_,p])=>!kl||p.k==kl),av=t=>{const v=L.map(([_,p])=>p.s[t]).filter(x=>x!=null);return v.length?Math.round(v.reduce((a,b)=>a+b)/v.length):null};
+  $('tb').innerHTML=L.map(([nis,p])=>`<tr><td>${p.n}</td><td>${nis}</td><td>${p.k}</td>${ST.map(t=>`<td>${p.s[t]??'–'}</td>`).join('')}<td>${p.s['Pre-test']!=null&&p.s['Post-test']!=null?(p.s['Post-test']-p.s['Pre-test']>0?'+':'')+(p.s['Post-test']-p.s['Pre-test']):'–'}</td></tr>`).join('');
+  $('av').innerHTML=ST.map(t=>`<div><b>${t}</b>: ${av(t)??'–'}<div class="bar"><i style="width:${av(t)||0}%"></i></div></div>`).join('');$('cn').textContent=L.length+' murid'};
+ main(`<div class="card"><div class="top"><h2>👩‍🏫 Dashboard Guru</h2><span><button class="btn g" id="csv">Unduh CSV</button><button class="btn" onclick="S.user?home():login()">Tutup</button></span></div>
+ <select id="fk" style="max-width:200px"><option value="">Semua kelas</option><option>X3</option><option>X4</option></select> <span class="tag" id="cn"></span>
+ <h3>Rata-rata per tahap</h3><div class="grid2" id="av"></div><h3>Nilai per murid (percobaan terbaru)</h3><div class="wide"><table><tr><th>Nama</th><th>NIS</th><th>Kelas</th>${ST.map(t=>`<th>${t}</th>`).join('')}<th>Selisih</th></tr><tbody id="tb"></tbody></table></div></div>`);
+ $('fk').onchange=()=>draw($('fk').value);draw('');
+ $('csv').onclick=()=>{const h=Object.keys(rows[0]||{}),c=[h.join(',')].concat(rows.map(r=>h.map(k=>'"'+String(r[k]).replace(/"/g,'""')+'"').join(',')));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+c.join('\n')],{type:'text/csv'}));a.download='hasil-infopadu.csv';a.click()}}
+
+S.user?home():login();
+</script></body></html>
